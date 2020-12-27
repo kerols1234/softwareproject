@@ -8,19 +8,47 @@ import javax.persistence.Id;
 @Entity
 public class SmsQueue {
 	private int id;
-	private int idOfTemplate;
 	private String sender;
 	private String receiver;
-	
-	public SmsQueue() {
+	private String body;
+	private String subject;
+	private String language;
+
+	public String getBody() {
+		return body;
 	}
 
-	public SmsQueue(int id, int idOfTemplate, String sender, String receiver) {
+	public void setBody(String body) {
+		this.body = body;
+	}
+
+	public String getSubject() {
+		return subject;
+	}
+
+	public void setSubject(String subject) {
+		this.subject = subject;
+	}
+
+	public String getLanguage() {
+		return language;
+	}
+
+	public void setLanguage(String language) {
+		this.language = language;
+	}
+
+	public SmsQueue(int id, String sender, String receiver, String body, String subject, String language) {
 		super();
 		this.id = id;
-		this.idOfTemplate = idOfTemplate;
 		this.sender = sender;
 		this.receiver = receiver;
+		this.body = body;
+		this.subject = subject;
+		this.language = language;
+	}
+
+	public SmsQueue() {
 	}
 
 	@Id
@@ -31,14 +59,6 @@ public class SmsQueue {
 
 	public void setId(int id) {
 		this.id = id;
-	}
-
-	public int getIdOfTemplate() {
-		return idOfTemplate;
-	}
-
-	public void setIdOfTemplate(int idOfTemplate) {
-		this.idOfTemplate = idOfTemplate;
 	}
 
 	public String getSender() {
