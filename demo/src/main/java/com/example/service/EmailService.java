@@ -1,5 +1,7 @@
 package com.example.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,4 +21,13 @@ public class EmailService {
 	public void delete(Integer id) {
 		emailRepo.deleteById(id);
 	}
+	
+	public EmailQueue get(Integer id) {
+		return emailRepo.findById(id).get();
+	}
+
+	public List<EmailQueue> listAll(){
+		return emailRepo.findAll();
+	}
+	
 }
