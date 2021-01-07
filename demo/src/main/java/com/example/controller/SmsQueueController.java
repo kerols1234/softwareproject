@@ -27,34 +27,39 @@ public class SmsQueueController {
 	private TemplateService tempaletService;
 	
 	@PostMapping("/sms/{sender}/{receiver}/{id}")
-	public void  queuing(@RequestBody ArrayOfData ex, @PathVariable String sender, @PathVariable String receiver, @PathVariable int id) {
-		template t = tempaletService.get(id);
-		SmsQueue queue = new SmsQueue();
-		queue.setLanguage(t.getLanguage());
-		queue.setReceiver(receiver);
-		queue.setSender(sender);
-		queue.setSubject(t.getSubject());
-		String d = t.getData();
-		
-		boolean b = false;
-		String v = "";
-		int j = 0;
-		for(int i = 0; i < d.length(); i++) {
-			if(d.charAt(i) == '{') {
-				v = "{";
-				b = true;
-			}else if(d.charAt(i) == '}'){
-				v += d.charAt(i);
-				d = d.replace(v, ex.getData().get(j));
-				j++;
-				b = false;
-			}else if(b) {
-				v += d.charAt(i); 
+	public ResponseEntity<?>  queuing(@RequestBody ArrayOfData ex, @PathVariable String sender, @PathVariable String receiver, @PathVariable int id) {
+		try {	
+			template t = tempaletService.get(id);
+			SmsQueue queue = new SmsQueue();
+			queue.setLanguage(t.getLanguage());
+			queue.setReceiver(receiver);
+			queue.setSender(sender);
+			queue.setSubject(t.getSubject());
+			String d = t.getData();
+			
+			boolean b = false;
+			String v = "";
+			int j = 0;
+			for(int i = 0; i < d.length(); i++) {
+				if(d.charAt(i) == '{') {
+					v = "{";
+					b = true;
+				}else if(d.charAt(i) == '}'){
+					v += d.charAt(i);
+					d = d.replace(v, ex.getData().get(j));
+					j++;
+					b = false;
+				}else if(b) {
+					v += d.charAt(i); 
+				}
 			}
+			
+			queue.setBody(d);
+			smsService.save(queue);
+			return new ResponseEntity<>(HttpStatus.OK);
+		}catch (Exception e) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
-		
-		queue.setBody(d);
-		smsService.save(queue);
  	}
 	
 	@GetMapping("/sms")
