@@ -5,16 +5,16 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.controller.EmailQueueRepo;
-import com.example.model.EmailQueue;
+import com.example.controller.EmailRepo;
+import com.example.model.Email;
 
 @Service
 public class EmailService {
 
 	@Autowired
-	private EmailQueueRepo emailRepo;
+	private EmailRepo emailRepo;
 	
-	public void save(EmailQueue e) {
+	public void save(Email e) {
 		emailRepo.save(e);
 	}
 
@@ -22,11 +22,11 @@ public class EmailService {
 		emailRepo.deleteById(id);
 	}
 	
-	public EmailQueue get(Integer id) {
+	public Email get(Integer id) {
 		return emailRepo.findById(id).get();
 	}
 
-	public List<EmailQueue> listAll(){
+	public List<Email> listAll(){
 		return emailRepo.findAll();
 	}
 	

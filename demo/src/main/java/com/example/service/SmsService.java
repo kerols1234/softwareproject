@@ -5,16 +5,16 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.controller.SmsQueueRepo;
-import com.example.model.SmsQueue;
+import com.example.controller.SmsRepo;
+import com.example.model.Sms;
 
 @Service
 public class SmsService {
 
 	@Autowired
-	private SmsQueueRepo smsRepo;
+	private SmsRepo smsRepo;
 	
-	public void save(SmsQueue e) {
+	public void save(Sms e) {
 		smsRepo.save(e);
 	}
 
@@ -22,11 +22,11 @@ public class SmsService {
 		smsRepo.deleteById(id);
 	}
 	
-	public SmsQueue get(Integer id) {
+	public Sms get(Integer id) {
 		return smsRepo.findById(id).get();
 	}
 
-	public List<SmsQueue> listAll(){
+	public List<Sms> listAll(){
 		return smsRepo.findAll();
 	}
 }
